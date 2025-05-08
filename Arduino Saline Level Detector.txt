@@ -1,0 +1,25 @@
+// Arduino code for saline level detector using two conductive probes
+#define SALINE_PIN A0 // Analog pin for saline sensor (two probes)
+#define LED_PIN 13    // LED indicator pin
+const int THRESHOLD = 500; // Adjust based on calibration
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(9600); // Initialize serial communication
+}
+
+void loop() {
+  int salineValue = analogRead(SALINE_PIN); // Read analog value from probes
+  Serial.print("Saline Level: ");
+  Serial.println(salineValue); // Output raw value to Serial Monitor
+  
+  // Indicate high salinity with LED
+  if (salineValue > THRESHOLD) {
+    digitalWrite(LED_PIN, HIGH);
+    Serial.println("High Salinity Detected!");
+  } else {
+    digitalWrite(LED_PIN, LOW);
+  }
+  
+  delay(1000); // Delay for readability
+}
